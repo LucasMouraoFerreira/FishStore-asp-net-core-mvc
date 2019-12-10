@@ -13,8 +13,8 @@
             <h2 class="text-info">Category List</h2>
         </div>
         <div class="col-6 text-right">
-            Create Button
-
+            <partial name="_CreateButtonPartial" />
+            
         </div>
     </div>
     <br />
@@ -25,7 +25,7 @@
 
                 <tr class="table-secondary">
                     <th>
-                        @Html.DisplayNameFor(m => m.Name);
+                        @Html.DisplayNameFor(m => m.Name)
                     </th>
                     <th></th>
                     <th></th>
@@ -35,10 +35,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(m => item.Name);
+                            @Html.DisplayFor(m => item.Name)
                         </td>
                         <td>
-                            EDIT | DELETE | DETAILS
+                            <partial name="_TableButtonPartial" model="item.Id"/>
                         </td>
                     </tr>
                 }
