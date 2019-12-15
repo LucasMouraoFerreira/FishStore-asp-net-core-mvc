@@ -1,0 +1,99 @@
+﻿@model FishStore.Models.ViewModels.StoreItemViewModel
+@using FishStore.Extensions
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Delete Item</h2>
+<br />
+
+<form method="post" enctype="multipart/form-data">
+    <div class="border p-2 row">
+        <input type="hidden" asp-for="StoreItem.Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StoreItem.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreItem.Name" readonly class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StoreItem.Description" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="StoreItem.Description" readonly class="form-control"></textarea>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StoreItem.Price" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreItem.Price" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StoreItem.Volume" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreItem.Volume" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StoreItem.Weight" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreItem.Weight" readonly class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StoreItem.CategoryId" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreItem.Category.Name" readonly class="form-control" />
+
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="StoreItem.SubCategoryId" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="StoreItem.SubCategory.Name" readonly class="form-control" />
+                </div>
+
+            </div>
+        </div>
+        <div class="col-3 offset-1">
+            <img src="@Model.StoreItem.Image" width="100%" style="border-radius:5px;border:1px solid #bbb9b9;" />
+        </div>
+
+        <div class="col-8">
+            <div class="col-8 offset-4">
+                <partial name="_DeleteAndBackToListButton" model="Model.StoreItem.Id" />
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
