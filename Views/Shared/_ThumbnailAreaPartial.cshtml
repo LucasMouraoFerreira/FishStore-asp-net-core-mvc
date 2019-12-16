@@ -1,0 +1,29 @@
+﻿@model IEnumerable<StoreItem>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@if (Model.Count() > 0)
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card-deck col-sm-12 col-md-6 col-lg-3">
+                <div class="card m-2">
+                    <img class="card-img-top" src="@item.Image" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title text-center font-weight-bold">@item.Name.ToUpper()</h5>
+                        <p class="card-text badge badge-primary text-left">@item.SubCategory.Name</p>
+                        <h5 class="card-text font-weight-bold text-success">R$@item.Price</h5>
+                        <p class="card-text text-justify">@item.Description</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="#" class="btn btn-lg btn-success">DETALHES</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+}

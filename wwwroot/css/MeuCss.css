@@ -1,0 +1,42 @@
+﻿.navbar-fundo {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.navbar-fundo:hover {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+body, html {
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    color: #505962;
+}
+
+.text-nuno {
+    color: #1ebba3;
+}
+
+.custom-toggler-icon {
+    color: white;
+    font-size: 1.6rem;
+}
+
+.navbar-textu {
+    padding: .7rem 1rem;
+    font-weight: bold;
+    letter-spacing: .1rem;
+    font-size: .9rem;
+    color: white;
+    
+    transition: color .6s ease;
+}
+
+    .navbar-textu:hover {
+        color: #1ebba3;
+        background: rgba(0, 0, 0, 0)!important;
+    }
+
+button:focus, a:focus {
+    outline: 0 !important;
+    box-shadow: none;
+}

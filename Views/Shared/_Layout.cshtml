@@ -6,39 +6,39 @@
     <title>@ViewData["Title"] - FishStore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/MeuCss.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ca63af555e.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FishStore</a>
+        <nav class="navbar navbar-expand-md navbar-toggleable-md border-bottom mb-3" style="background: rgba(0, 0, 0, 0.8) !important;">
+            <div class="container-fluid">
+                <a class="navbar-brand"  asp-area="" asp-controller="Home" asp-action="Index"><img style="height:3rem" src="~/images/logo.png" alt="NavbarBrand" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="custom-toggler-icon">
+                        <i class="fas fa-bars"></i>
+                    </span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="navbar-collapse collapse d-md-inline-flex flex-md-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item dropdown text-dark">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Content Management
+                        <li class="nav-item dropdown navbar-textu">
+                            <a class="nav-link dropdown-toggle navbar-textu p-0" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                GERENCIAR CONTEÚDO
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
-                                <a class="dropdown-item"  asp-action="Index" asp-controller="SubCategory" asp-area="Admin">Sub Category</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="StoreItem" asp-area="Admin">Items</a>
-                                <a class="dropdown-item">Coupons</a>
-                                <a class="dropdown-item">Users</a>
+                            <div class="dropdown-menu" style="background: rgba(0, 0, 0, 0.8) !important;" aria-labelledby="navbarDropDownMenuLink">
+                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="Category" asp-area="Admin">CATEGORIA</a>
+                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">SUBCATEGORIA</a>
+                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="StoreItem" asp-area="Admin">ITENS</a>
+                                <a class="dropdown-item navbar-textu" href="#">USUÁRIOS</a>
                             </div>
 
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link navbar-textu" asp-area="" asp-controller="Home" asp-action="Products">PRODUTOS</a>
                         </li>
                     </ul>
                 </div>
@@ -51,7 +51,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted ">
         <div class="container">
             &copy; 2019 - FishStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

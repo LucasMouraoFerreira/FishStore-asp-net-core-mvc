@@ -1,0 +1,19 @@
+﻿@model FishStore.Models.ViewModels.ProductsViewModel
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Os Melhores Produtos Para Seu Áquario</h1>
+<br />
+
+<div class="container-fluid">
+    
+    <div id="menu-wrapper">
+        <partial name="_ThumbnailAreaPartial" model="@Model.StoreItem" />
+    </div>
+
+
+</div>
+
