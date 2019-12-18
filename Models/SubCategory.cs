@@ -12,11 +12,11 @@ namespace FishStore.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "SubCategory Name")]
+        [Display(Name = "Nome da Subcategoria")]
         [Required]
         public string Name { get; set; }
 
-        [Display(Name = "Category")]
+        [Display(Name = "Categoria")]
         [Required]
         public int CategoryId { get; set; }
 

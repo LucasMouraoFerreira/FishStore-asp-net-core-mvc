@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Os Melhores Produtos Para Seu Áquario</h1>
+<h1 class="text-center" style="padding-top:90px">Os Melhores Produtos Para Seu Áquario</h1>
 <br />
 
-<div class="container-fluid">
+<div class="jumbotron">
     
-    <div id="menu-wrapper">
+    <div id="menu-wrapper" class="container">
         <partial name="_ThumbnailAreaPartial" model="@Model.StoreItem" />
     </div>
 

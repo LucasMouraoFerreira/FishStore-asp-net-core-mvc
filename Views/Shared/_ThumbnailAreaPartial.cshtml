@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-center font-weight-bold">@item.Name.ToUpper()</h5>
                         <p class="card-text badge badge-primary text-left">@item.SubCategory.Name</p>
-                        <h5 class="card-text font-weight-bold text-success">R$@item.Price</h5>
+                        <h5 class="card-text price font-weight-bold text-success">R$@item.Price.ToString("F2")</h5>
                         <p class="card-text text-justify">@item.Description</p>
                     </div>
                     <div class="card-footer text-center">

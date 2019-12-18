@@ -4,71 +4,74 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1 class="text-center" style="padding-top:90px">Itens da Loja</h1>
 <br />
-<br />
 
-<div class="border p-3">
-    <div class="row">
-        <div class="col-6">
-            <h2 class="text-info">Item List</h2>
-        </div>
-        <div class="col-6 text-right">
-            <partial name="_CreateButtonPartial" />
+<div class="jumbotron">
+    <div class="container">
+        <div class="border bg-white rounded p-3">
+            <div class="row">
+                <div class="col-6">
+                    
+                </div>
+                <div class="col-6 text-right">
+                    <partial name="_CreateButtonPartial" />
 
-        </div>
-    </div>
-    <br />
-    <div>
-        @if (Model.Count() > 0)
-        {
-            <table class="table table-striped border">
-
-                <tr class="table-secondary">
-                    <th>
-                        @Html.DisplayNameFor(m => m.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.Price)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.CategoryId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => m.SubCategoryId)
-                    </th>
-                    <th></th>
-                    <th></th>
-                </tr>
-
-                @foreach (var item in Model)
+                </div>
+            </div>
+            <br />
+            <div>
+                @if (Model.Count() > 0)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Category.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.SubCategory.Name)
-                        </td>
-                        <td>
-                            <partial name="_TableButtonPartial" model="item.Id" />
-                        </td>
-                    </tr>
+                    <table class="table table-striped border">
+
+                        <tr class="table-secondary">
+                            <th>
+                                @Html.DisplayNameFor(m => m.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(m => m.Price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(m => m.CategoryId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(m => m.SubCategoryId)
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Category.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.SubCategory.Name)
+                                </td>
+                                <td>
+                                    <partial name="_TableButtonPartial" model="item.Id" />
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
                 }
-
-            </table>
-        }
-        else
-        {
-            <p>No item exists yet</p>
-        }
+                else
+                {
+                    <p>No item exists yet</p>
+                }
+            </div>
+        </div>
+        </div>
     </div>
-</div>
-
 
 

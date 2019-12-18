@@ -40,3 +40,55 @@ button:focus, a:focus {
     outline: 0 !important;
     box-shadow: none;
 }
+/*Home landing image*/
+.home-inner {
+    background-image: url(../images/bg-fish-image.jpg);
+    position: fixed;
+    height: 100%;
+    width:100%;
+    background-size: cover;
+    background-position: center center;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+    display: table;
+}
+
+.landing {
+    position: relative;
+    width:100%;
+    height: 100vh;
+    display: table;
+    z-index: -1;
+}
+
+.home-wrap {
+    clip: rect(0,auto,auto,0);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+
+}
+
+.card 
+{
+    transition: all .3s ease;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+.heading-underline {
+    width: 50px;
+    height: 3px;
+    margin-left:10px;
+    margin-right:10px;
+    background-color: #1ebba3;
+    margin-bottom: 0px;
+   display: inline-block;
+   vertical-align: top;
+   text-align:center;
+}

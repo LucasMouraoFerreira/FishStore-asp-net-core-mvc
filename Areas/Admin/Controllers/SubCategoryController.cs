@@ -57,7 +57,7 @@ namespace FishStore.Areas.Admin.Controllers
                 if (doesSubCategoryExists.Count() > 0)
                 {
                     //ERROR
-                    StatusMessage = "Error: Sub Category exists under :" + doesSubCategoryExists.First().Category.Name + " category, please use another name.";
+                    StatusMessage = "Error: Subcategoria existe na categoria:" + doesSubCategoryExists.First().Category.Name + " , use outro nome.";
                 }
                 else
                 {

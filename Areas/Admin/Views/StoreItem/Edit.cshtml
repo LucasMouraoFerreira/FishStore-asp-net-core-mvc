@@ -5,102 +5,105 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1 class="text-center" style="padding-top:90px">Edição do Item</h1>
 <br />
-<h2 class="text-info">Edit Item</h2>
-<br />
 
-<form method="post" enctype="multipart/form-data">
-    <div class="border p-2 row">
-        <input type="hidden" asp-for="StoreItem.Id" />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        
-        <div class="col-8">
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.Name" class="col-form-label"></label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="StoreItem.Name" class="form-control" />
-                </div>
-                <span asp-validation-for="StoreItem.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.Description" class="col-form-label"></label>
-                </div>
-                <div class="col-8">
-                    <textarea asp-for="StoreItem.Description" class="form-control"></textarea>
-                </div>
-                <span asp-validation-for="StoreItem.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.Image" class="col-form-label"></label>
-                </div>
-                <div class="col-8">
-                    <input type="file" name="files" multiple class="form-control" />
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.Price" class="col-form-label"></label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="StoreItem.Price" class="form-control" />
-                </div>
-                <span asp-validation-for="StoreItem.Price" class="text-danger"></span>
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.Volume" class="col-form-label"></label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="StoreItem.Volume" class="form-control" />
-                </div>
-                <span asp-validation-for="StoreItem.Volume" class="text-danger"></span>
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.Weight" class="col-form-label"></label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="StoreItem.Weight" class="form-control" />
-                </div>
-                <span asp-validation-for="StoreItem.Weight" class="text-danger"></span>
-            </div>
+<div class="jumbotron">
+    <div class="container">
 
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.CategoryId" class="col-form-label"></label>
-                </div>
+        <form method="post" enctype="multipart/form-data">
+            <div class="border p-4 bg-white rounded row">
+                <input type="hidden" asp-for="StoreItem.Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <div class="col-8">
-                    <select asp-for="@Model.StoreItem.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.StoreItem.CategoryId)" class="form-control"></select>
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.Name" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="StoreItem.Name" class="form-control" />
+                        </div>
+                        <span asp-validation-for="StoreItem.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.Description" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <textarea asp-for="StoreItem.Description" class="form-control"></textarea>
+                        </div>
+                        <span asp-validation-for="StoreItem.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.Image" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <input type="file" name="files" multiple class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.Price" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="StoreItem.Price" class="form-control" />
+                        </div>
+                        <span asp-validation-for="StoreItem.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.Volume" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="StoreItem.Volume" class="form-control" />
+                        </div>
+                        <span asp-validation-for="StoreItem.Volume" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.Weight" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="StoreItem.Weight" class="form-control" />
+                        </div>
+                        <span asp-validation-for="StoreItem.Weight" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.CategoryId" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <select asp-for="@Model.StoreItem.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.StoreItem.CategoryId)" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4 font-weight-bold">
+                            <label asp-for="StoreItem.SubCategoryId" class="col-form-label"></label>
+                        </div>
+                        <div class="col-8">
+                            <select asp-for="@Model.StoreItem.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty, "Id", "Name"))" class="form-control"></select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-3 offset-1">
+                    <img src="@Model.StoreItem.Image" style="width:100%;border-radius:5px;border:1px solid #bbb9b9;" />
                 </div>
 
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="StoreItem.SubCategoryId" class="col-form-label"></label>
-                </div>
                 <div class="col-8">
-                    <select asp-for="@Model.StoreItem.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty, "Id", "Name"))" class="form-control"></select>
+                    <div class="col-8 offset-4">
+                        <partial name="_EditAndBackToListButton" model="Model.StoreItem.Id" />
+                    </div>
                 </div>
 
             </div>
-        </div>
-        <div class="col-3 offset-1">
-            <img src="@Model.StoreItem.Image" width="100%" style="border-radius:5px;border:1px solid #bbb9b9;" />
-        </div>
-
-        <div class="col-8">
-            <div class="col-8 offset-4">
-                <partial name="_EditAndBackToListButton" model="Model.StoreItem.Id"/>
-            </div>
-        </div>
-                
+        </form>
     </div>
-</form>
-
+</div>
 @section Scripts{
 
     <script type="text/javascript">
