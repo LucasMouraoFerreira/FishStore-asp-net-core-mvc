@@ -4,20 +4,151 @@
 }
 
 
-
 <!--Start Landing Page-->
-
-<div class="landing">
-    <div class="home-wrap">
-        <div class="home-inner">
+<div id="landingPage">
+    <div class="landing">
+        <div class="home-wrap">
+            <div class="home-inner">
+            </div>
         </div>
     </div>
+
+
+
+    <div class="caption text-center text-light text-uppercase">
+        <h1 class="font-weight-bold os-animation" data-animation="fadeInUp" data-delay=".6s">Bem-vindo à Fake <span style="color: #1ebba3;">FISH</span> Store</h1>
+        <h3 class="os-animation" data-animation="fadeInUp" data-delay=".8s">A melhor e maior loja de aquarismo do brasil</h3>
+        <a class="btn btn-outline-light btn-lg rounded-0 os-animation" data-animation="fadeInUp" data-delay=".8s" href="#services">Explore</a>
+    </div>
+</div>
+<!--End Landing Page -->
+
+<div id="services" class="offset">
+    <h1 class="text-center" style="padding-top:20px">Nossos Serviços</h1>
+    <br />
+    <div class="pb-3" style="display:inline-block; width:100%; text-align:center;color: #1ebba3; color: #1ebba3;">
+        <i class="fab fa-pagelines" style="transform: scale3d(-2,2,2); margin-right: 15px;"></i>
+        <i class="fas fa-fish" style="color: #1ebba3; transform: scale(2); margin-right:15px;"></i>
+        <i class="fab fa-pagelines" style="color: #1ebba3; transform: scale(2);"></i>
+    </div>
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row text-center px-lg-4 px-xl-5">
+                <div class="col-sm-12 col-md-6 os-animation px-5" data-animation="fadeInUp">
+                    <span class="fa-stack fa-3x">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#1ebba3"></i>
+                        <i class="fas fa-truck-moving fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h5 class="text-uppercase font-weight-bold pt-2">entrega confiável</h5>
+                    <p class="lead text-justify">
+                        Áte 1 dia útil após a confirmação do pagamento,
+                        enviamos o produto por meio do SEDEX 10 e não realizamos a postagem nas sextas-feiras e sabádos,
+                        para que sua encomenda viva chegue saúdavel em no máximo 1 dia.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6 os-animation px-5" data-animation="fadeInUp">
+                    <span class="fa-stack fa-3x">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#1ebba3"></i>
+                        <i class="fab fa-stripe fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h5 class="text-uppercase font-weight-bold pt-2">pagamento seguro</h5>
+                    <p class="lead text-justify">
+                        Todos os pagamentos com cartão de crédito realizados na plataforma são processados pela Stripe,
+                        garantindo segurança e agilidade na sua compra.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6 os-animation px-5" data-animation="fadeInUp">
+                    <span class="fa-stack fa-3x">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#1ebba3"></i>
+                        <i class="fas fa-map-marked-alt fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h5 class="text-uppercase font-weight-bold pt-2">localização privilegiada</h5>
+                    <p class="lead text-justify">
+                        Melhor que comprar pelo nosso site, só visitar a nossa linda loja física no centro de
+                        Belo Horizonte, próximo da Praça Sete de Setembro, e se inspirar com os nossos 30 áquarios em exibição.
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6 os-animation px-5" data-animation="fadeInUp">
+                    <span class="fa-stack fa-3x">
+                        <i class="fas fa-circle fa-stack-2x" style="color:#1ebba3"></i>
+                        <i class="fas fa-fish fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h5 class="text-uppercase font-weight-bold pt-2">os melhores peixes!</h5>
+                    <p class="lead text-justify">
+                        Todos os peixes da loja são criados com carinho e cuidado por um time especializado e apaixonado, é a garantia de um peixe
+                        feliz e saúdavel no seu áquario!
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<!--End Landing Page-->
-<h1>
-    afasvsdvvvvvvvvvvvvvvvvvvvvvsvsdvsdv
-    sdvsvdSVsvdsdvsdvvvvvvvvvvvvvvvvvvvvvvv
-    SVDsvSVsvsVSVsvsdvsvVAVDAVASVASDVSVASDV
-    SDVSAVASDVAVAVASDVAVASVDAVASVASV
-</h1>
+
+
+<a href="#landingPage" class="top-scroll">
+    <i class="fa fa-angle-up top-icon"></i>
+</a>
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        /*==========TOP SCROLL BUTTON ==========*/
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 500) {
+                    $('.top-scroll').fadeIn();
+                } else {
+                    $('.top-scroll').fadeOut();
+                }
+            });
+        });
+
+        /*==========SMOOTH SCROLL TO LINK a[href^="#"] ==========*/
+        $(document).on('click', 'a[href^="#"]', function (event) {
+            event.preventDefault();
+
+            $('html, body').animate({
+                scrollTop: $($.attr(this, 'href')).offset().top
+            }, 500);
+        });
+
+        /*========== WAYPOINTS ANIMATION DELAY ==========*/
+        //Original Resource: https://www.oxygenna.com/tutorials/scroll-animations-using-waypoints-js-animate-css
+        $(function () { // a self calling function
+            function onScrollInit(items, trigger) { // a custom made function
+                items.each(function () { //for every element in items run function
+                    var osElement = $(this), //set osElement to the current
+                        osAnimationClass = osElement.attr('data-animation'), //get value of attribute data-animation type
+                        osAnimationDelay = osElement.attr('data-delay'); //get value of attribute data-delay time
+
+                    osElement.css({ //change css of element
+                        '-webkit-animation-delay': osAnimationDelay, //for safari browsers
+                        '-moz-animation-delay': osAnimationDelay, //for mozilla browsers
+                        'animation-delay': osAnimationDelay //normal
+                    });
+
+                    var osTrigger = (trigger) ? trigger : osElement; //if trigger is present, set it to osTrigger. Else set osElement to osTrigger
+
+                    osTrigger.waypoint(function () { //scroll upwards and downwards
+                        osElement.addClass('animated').addClass(osAnimationClass); //add animated and the data-animation class to the element.
+                    }, {
+                        triggerOnce: true, //only once this animation should happen
+                        offset: '70%' // animation should happen when the element is 70% below from the top of the browser window
+                    });
+                });
+            }
+
+            onScrollInit($('.os-animation')); //function call with only items
+            onScrollInit($('.staggered-animation'), $('.staggered-animation-container')); //function call with items and trigger
+        });
+
+
+    </script>
+}
