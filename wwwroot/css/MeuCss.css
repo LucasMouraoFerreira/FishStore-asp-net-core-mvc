@@ -2,9 +2,9 @@
     background: rgba(0, 0, 0, 0.6) !important;
 }
 
-.navbar-fundo:hover {
-    background: rgba(0, 0, 0, 0.6) !important;
-}
+    .navbar-fundo:hover {
+        background: rgba(0, 0, 0, 0.6) !important;
+    }
 
 html {
     padding: env(safe-area-inset);
@@ -14,10 +14,6 @@ body, html {
     overflow-x: hidden;
     font-family: 'Montserrat', sans-serif;
     color: #505962;
-}
-
-.text-nuno {
-    color: #1ebba3;
 }
 
 .custom-toggler-icon {
@@ -31,13 +27,12 @@ body, html {
     letter-spacing: .1rem;
     font-size: .9rem;
     color: white;
-    
     transition: color .6s ease;
 }
 
     .navbar-textu:hover {
         color: #1ebba3;
-        background: rgba(0, 0, 0, 0)!important;
+        background: rgba(0, 0, 0, 0) !important;
     }
 
 button:focus, a:focus, a.btn:focus {
@@ -49,7 +44,7 @@ button:focus, a:focus, a.btn:focus {
     background-image: url(../images/bg-fish-image.jpg);
     position: fixed;
     height: 100%;
-    width:100%;
+    width: 100%;
     background-size: cover;
     background-position: center center;
     -webkit-transform: translateZ(0);
@@ -60,7 +55,7 @@ button:focus, a:focus, a.btn:focus {
 
 .landing {
     position: relative;
-    width:100%;
+    width: 100%;
     height: 100vh;
     display: table;
     z-index: -1;
@@ -73,50 +68,68 @@ button:focus, a:focus, a.btn:focus {
     width: 100%;
     top: 0;
     left: 0;
-
 }
 
-.card 
-{
+.card {
     transition: all .3s ease;
 }
 
-.card:hover{
-    transform: scale(1.05);
-}
+    .card:hover {
+        transform: scale(1.05);
+    }
 
 
 .caption {
-    z-index:1;
+    z-index: 1;
     position: absolute;
-    top:15%;
-    width:100%;
-    max-width:100%;
+    top: 8%;
+    width: 100%;
+    max-width: 100%;
 }
 
-.caption h1 {
-    font-size:3.5rem;
-    letter-spacing:.1rem;
-    text-shadow: .1rem .1rem .8rem black;
-    padding-bottom: 1rem;
-}
+    .caption h1 {
+        font-size: 3.5rem;
+        letter-spacing: .1rem;
+        text-shadow: .1rem .1rem .8rem black;
+        padding-bottom: 1rem;
+    }
 
-.caption h3 {
-    font-size:2rem;
-    text-shadow: .1rem .1rem .5rem black;
-    padding-bottom: 2rem;
-}
+    .caption h3 {
+        font-size: 2rem;
+        text-shadow: .1rem .1rem .5rem black;
+        padding-bottom: 2rem;
+    }
 
-.caption .btn-lg {
-    border-width: medium;
-    padding: .8rem 1.5rem;
-}
+    .caption .btn-lg {
+        border-width: medium;
+        padding: .8rem 1.5rem;
+    }
 
 .offset:before {
-    content:"";
-    height:4.4rem;
-    display:block;
-    margin-top:-4.4rem;
+    content: "";
+    height: 4.4rem;
+    display: block;
+    margin-top: -4.4rem;
+}
+
+ul.social {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+ul.social li {
+    display: inline;
+    padding-right: .8rem;
+}
+
+ul.social li a {
+    color: white;
+    transition: all .2s ease;
+}
+ul.social li a:hover {
+    color: #1ebbe3;
 }
 
 .top-scroll {
@@ -128,7 +141,7 @@ button:focus, a:focus, a.btn:focus {
     display: none;
 }
 
-.top-scroll:hover{
+.top-scroll:hover {
     opacity: .8;
 }
 
@@ -137,12 +150,82 @@ button:focus, a:focus, a.btn:focus {
     font-size: 3rem;
 }
 
+#map {
+    border-radius:10px;
+    height: 350px;
+    width: 100%;
+}
+
+/*============= MEDIA QUERIES =============*/
+
+/* Devices under 992px (lg) */
+@media (max-width: 991.98px) {
+    .caption h1 {
+        font-size: 3.5rem;
+        letter-spacing: .2rem;
+        padding-bottom: .8rem;
+    }
+
+    .caption h3 {
+        font-size: 2.2rem;
+        padding-bottom: 1.7rem;
+    }
+
+    .caption .btn-lg {
+        padding: .7rem 1.2rem;
+        font-size: 1rem;
+    }
+
+}
+
+/* Devices under 768px (md) */
+@media (max-width: 767.98px) {
+    .caption h1 {
+        font-size: 2.7rem;
+        letter-spacing: .15rem;
+        padding-bottom: .5rem;
+    }
+
+    .caption h3 {
+        font-size: 1.7rem;
+        padding-bottom: 1.2rem;
+    }
+
+    .caption .btn-lg {
+        padding: .6rem 1.1rem;
+    }
+
+    .top-scroll {
+        display: none !important;
+    }
+}
+
+/* Devices under 576px (sm) */
+@media (max-width: 575.98px) {
+
+.caption h1 {
+    font-size: 1.9rem;
+    letter-spacing: .1rem;
+    padding-bottom: .4rem;
+}
+
+.caption h3 {
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+}
+
+.caption .btn-lg {
+    padding: .4rem .9rem;
+    font-size: .9rem;
+    }
+}
+
 .os-animation {
     opacity: 0;
     margin: 0 !important;
     max-width: 100%;
 }
 
-.os-animation.animated{
-    opacity:1;
+.os-animation.animated {
+    opacity: 1;
 }

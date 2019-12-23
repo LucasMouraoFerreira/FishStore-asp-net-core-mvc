@@ -13,8 +13,6 @@
         </div>
     </div>
 
-
-
     <div class="caption text-center text-light text-uppercase">
         <h1 class="font-weight-bold os-animation" data-animation="fadeInUp" data-delay=".6s">Bem-vindo à Fake <span style="color: #1ebba3;">FISH</span> Store</h1>
         <h3 class="os-animation" data-animation="fadeInUp" data-delay=".8s">A melhor e maior loja de aquarismo do brasil</h3>
@@ -22,7 +20,7 @@
     </div>
 </div>
 <!--End Landing Page -->
-
+<!-- Start Services-->
 <div id="services" class="offset">
     <h1 class="text-center" style="padding-top:20px">Nossos Serviços</h1>
     <br />
@@ -32,7 +30,7 @@
         <i class="fab fa-pagelines" style="color: #1ebba3; transform: scale(2);"></i>
     </div>
 
-    <div class="jumbotron">
+    <div class="jumbotron mb-3">
         <div class="container">
             <div class="row text-center px-lg-4 px-xl-5">
                 <div class="col-sm-12 col-md-6 os-animation px-5" data-animation="fadeInUp">
@@ -86,8 +84,73 @@
     </div>
 
 </div>
+<!-- End Services-->
+<!--Start Our History-->
+<h1 class="text-center mt-0">Nossa História</h1>
+<br />
+<div class="pb-3" style="display:inline-block; width:100%; text-align:center;color: #1ebba3; color: #1ebba3;">
+    <i class="fab fa-pagelines" style="transform: scale3d(-2,2,2); margin-right: 15px;"></i>
+    <i class="fas fa-fish" style="color: #1ebba3; transform: scale(2); margin-right:15px;"></i>
+    <i class="fab fa-pagelines" style="color: #1ebba3; transform: scale(2);"></i>
+</div>
 
+<div class="jumbotron mb-0">
+    <div class="row  px-lg-4 px-xl-5">
+        <div class="col-sm-12 text-center col-md-6 os-animation bg-white rounded p-5" data-animation="fadeInUp">
+            <p class="lead text-justify">
+                A Fake Fish Store foi fundada em 2010 por dois irmãos, Lucas e Camilo,
+                apaixonados por toda forma de vida, mas especialmente pela vida marinha.
+                Cresceram fascinados pelas intensas cores e a beleza de um recife de
+                corais e todas as criaturas que o habitam. E logo quando começaram a trabalhar,
+                todo o dinheiro que sobrava era investido em um aquário marinho (“esse que lhe deu boas-vindas ao site!”).
+                Durante esse período sentiram a dificuldade de se montar e manter um bom aquário marinho
+                no Brasil, e essa visão os levou a fundação da empresa e ao sucesso que se sucedeu.
+            </p>
+            <p class="lead text-justify">
+                Hoje a empresa conta com mais de 20 funcionários apaixonados e especialistas em vida marinha,
+                e busca através de sua loja física e loja virtual fazer com que aquaristas brasileiros tenham
+                acesso aos melhores produtos do mercado, e que assim como os irmãos, obtenham o aquário de seus sonhos.
+            </p>
+        </div>
+        <div class="col-sm-12 col-md-6 os-animation m-5 p-5" data-animation="fadeInUp">
+            <img class="rounded-circle" style="width:100%; " src="~/images/two-boy-touching-aquarium-glass-3167782 (1).jpg" alt="Boys looking an aquarium" />
+        </div>
 
+    </div>
+</div>
+<!--End Our History-->
+<!--Start Contact-->
+<!-- Start Contact Section -->
+<div id="contact">
+
+    <div class="row mt-0 outer bg-dark">
+
+        <div class="container ">
+            <div class="row py-3">
+
+                <div class="col-md-5 col-sm-12 text-white text-center">
+                    <p class="text-justify">Temos como missão disponibilizar os melhores produtos, peixes, plantas e corais para seu aquário.</p>
+                    <strong>Nossa Localização</strong>
+                    <p>Praça Sete de Setembro, Centro<br>Belo Horizonte, Brasil</p>
+                    <strong>Informações de Contato</strong>
+                    <p>(31) 9999-9999<br>email@fakefishstore.com</p>
+                    <ul class="social pt-3 pb-3 ">
+                        <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-youtube-square"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div> <!-- End Column -->
+                <div class="col-md-7 col-sm-12">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--End Contact-->
 
 <a href="#landingPage" class="top-scroll">
     <i class="fa fa-angle-up top-icon"></i>
@@ -96,6 +159,25 @@
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <!-- Start google maps javascript API-->
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Uluru
+            var bh = { lat: -19.919154, lng: -43.938636 };
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 15, center: bh });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({ position: bh, map: map });
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9OsX70hgDKJuO2SZNDXFGG0kLPIWESMI&callback=initMap">
+    </script>
+    <!-- End google maps javascript API-->
 
     <script>
 
