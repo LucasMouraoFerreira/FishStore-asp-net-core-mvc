@@ -1,9 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>aspnet-FishStore-9EC456CB-771B-4EE2-8173-9B39142C9AB7</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20191224172852_MoreFieldsToUser.cs" />
+    <Compile Remove="Data\Migrations\20191224172852_MoreFieldsToUser.Designer.cs" />
+  </ItemGroup>
 
 
   <ItemGroup>

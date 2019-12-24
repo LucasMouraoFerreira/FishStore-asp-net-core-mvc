@@ -7,6 +7,8 @@ namespace FishStore.Utility
 {
     public static class SD
     {
-        public static string DefaultImage = "Default_Image.jpg";
+        public const string DefaultImage = "Default_Image.jpg";
+        public const string ManagerUser = "Manager";
+        public const string CustomerEndUser = "Customer";
     }
 }
