@@ -8,7 +8,7 @@
     <div class="row">
         @foreach (var item in Model)
         {
-            <div class="card-deck col-sm-12 col-md-6 col-lg-3 post @item.Category.Name.Replace(" ",string.Empty) store-items">
+            <div  class="card-deck col-sm-12 col-md-6 col-lg-3 @item.Category.Name.Replace(" ",string.Empty) @item.Name.Replace(" ", string.Empty).ToUpper() store-items" data-price="@item.Price.ToString("F2")" data-name=".@item.Name.Replace(" ", string.Empty).ToUpper()">
                 <div class="card m-2">
                     <img class="card-img-top" src="@item.Image" alt="Card image cap">
                     <div class="card-body">

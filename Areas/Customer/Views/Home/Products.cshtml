@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center" style="padding-top:90px;">Os Melhores Produtos Para Seu Áquario</h1>
+<h1 class="text-center" style="padding-top:90px;">Os Melhores Produtos Para Seu Aquário</h1>
 <br />
 
 <div class="pb-3" style="display:inline-block; width:100%; text-align:center;color: #1ebba3; color: #1ebba3;">
@@ -15,7 +15,7 @@
 </div>
 
 
-   
+
 
 
 <div class="jumbotron pt-3">
@@ -29,13 +29,19 @@
 
     <div class="row border-bottom border-secondary" style="border-color:darkslategray">
         <div class="col-md-6 col-sm-12">
-            <ul id="store-filters" class="store-filter-list list-inline text-center">
+            <h5 class="font-weight-bold text-center">CATEGORIAS</h5>
+            <ul id="store-filters" class="list-inline text-center">
                 <li class="active btn btn-outline-dark rounded-0" data-filter=".store-items">Todos</li>
                 @foreach (var item in Model.Category)
                 {
                     <li class="btn btn-outline-dark rounded-0" data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
                 }
             </ul>
+        </div>
+        <div class="col-md-4 offset-md-1 col-sm-12">
+            <h5 class="font-weight-bold text-center">PREÇO</h5>
+            <div id="price-slider"></div>
+            <p id="PriceSelectedValue" class="font-weight-bold"></p>
         </div>
     </div>
 
@@ -49,7 +55,7 @@
 @section Scripts {
 
     <script>
-        var posts = $('.post');
+
 
         (function ($) {
             $("#store-filters li").click(function () {
@@ -58,16 +64,62 @@
 
                 var selectedFilter = $(this).data("filter");
 
-                
-                $(".store-items").fadeOut();
 
-                setTimeout(function () {
-                     $(selectedFilter).fadeIn();
-                },300);
-               
+                $(".store-items").hide();
+
+                $(selectedFilter).show();
                 
+
+                var priceValue = priceSlider.noUiSlider.get();
+                $(selectedFilter).each(function () {
+                    var itemPrice = parseFloat($(this).data("price"));
+                    var priceFilterValue = parseFloat(priceValue);
+                    var itemName = $(this).data("name");
+                    if (itemPrice > priceFilterValue) {
+                        $(itemName).hide();
+                    }
+                });
+
             });
         })(jQuery);
+    </script>
+
+    <script>
+        var priceSlider = document.getElementById('price-slider');
+
+        noUiSlider.create(priceSlider, {
+            start: 20,
+            connect: 'lower',
+            range: {
+                'min': 0,
+                'max': 50
+            }
+        });
+
+        var priceValue = priceSlider.noUiSlider.get();
+        document.getElementById("PriceSelectedValue").innerHTML = "R$" + priceValue;
+
+        priceSlider.noUiSlider.on('change', function () {
+
+            var priceValue = priceSlider.noUiSlider.get();
+            document.getElementById("PriceSelectedValue").innerHTML = "R$" + priceValue;
+
+            var categoryName = $("#store-filters li.active").data("filter");
+            $(categoryName).show();
+
+            $(".store-items").each(function () {
+                var itemPrice = parseFloat($(this).data("price"));
+                var priceFilterValue = parseFloat(priceValue);
+                var itemName = $(this).data("name");
+                if (itemPrice > priceFilterValue) {
+                    $(itemName).hide();
+                }
+            });
+
+        });
+
+
+
     </script>
 
 }
