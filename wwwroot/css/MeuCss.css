@@ -70,6 +70,11 @@ button:focus, a:focus, a.btn:focus {
     left: 0;
 }
 
+
+.store-filter-list li {
+    display: inline-block;
+}
+
 .card {
     transition: all .3s ease;
 }

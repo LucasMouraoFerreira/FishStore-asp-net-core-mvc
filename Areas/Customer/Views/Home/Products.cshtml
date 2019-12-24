@@ -14,8 +14,31 @@
     <i class="fab fa-pagelines" style="color: #1ebba3; transform: scale(2);"></i>
 </div>
 
-<div class="jumbotron">
-    
+
+   
+
+
+<div class="jumbotron pt-3">
+
+    <div class="text-center mt-0 mb-1">
+        <span class="fa-stack fa-2x">
+            <i class="fas fa-square fa-stack-2x"></i>
+            <i class="fas fa-filter fa-stack-1x fa-inverse"></i>
+        </span>
+    </div>
+
+    <div class="row border-bottom border-secondary" style="border-color:darkslategray">
+        <div class="col-md-6 col-sm-12">
+            <ul id="store-filters" class="store-filter-list list-inline text-center">
+                <li class="active btn btn-outline-dark rounded-0" data-filter=".store-items">Todos</li>
+                @foreach (var item in Model.Category)
+                {
+                    <li class="btn btn-outline-dark rounded-0" data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
+                }
+            </ul>
+        </div>
+    </div>
+
     <div id="menu-wrapper" class="container">
         <partial name="_ThumbnailAreaPartial" model="@Model.StoreItem" />
     </div>
@@ -23,3 +46,28 @@
 
 </div>
 
+@section Scripts {
+
+    <script>
+        var posts = $('.post');
+
+        (function ($) {
+            $("#store-filters li").click(function () {
+                $("#store-filters li").removeClass('active');
+                $(this).addClass('active');
+
+                var selectedFilter = $(this).data("filter");
+
+                
+                $(".store-items").fadeOut();
+
+                setTimeout(function () {
+                     $(selectedFilter).fadeIn();
+                },300);
+               
+                
+            });
+        })(jQuery);
+    </script>
+
+}
