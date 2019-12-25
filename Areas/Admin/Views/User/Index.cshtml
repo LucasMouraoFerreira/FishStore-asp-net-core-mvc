@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center" style="padding-top:90px">Usuários</h1>
+<br />
+
+<div class="pb-3" style="display:inline-block; width:100%; text-align:center;color: #1ebba3; color: #1ebba3;">
+    <i class="fab fa-pagelines" style="transform: scale3d(-2,2,2); margin-right: 15px;"></i>
+    <i class="fas fa-fish" style="color: #1ebba3; transform: scale(2); margin-right:15px;"></i>
+    <i class="fab fa-pagelines" style="color: #1ebba3; transform: scale(2);"></i>
+</div>
+
+<div class="jumbotron">
+    <div class="border container rounded bg-white p-3">
+        <div class="row">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-right">
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info">Criar Conta</a>
+
+            </div>
+        </div>
+        <br />
+        <div>
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+
+                    <tr class="table-secondary">
+                        <th>
+                            @Html.DisplayNameFor(m => m.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(m => m.PhoneNumber)
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
+                        {
+                        <a class="btn btn-success text-white" asp-action="Lock" asp-route-id="@item.Id">
+                            <i class="fas fa-lock-open"></i>
+                        </a>
+                        }
+                        else
+                        {
+                        <a class="btn btn-danger text-white" asp-action="UnLock" asp-route-id="@item.Id">
+                            <i class="fas fa-lock"></i>
+                        </a>
+                        }
+                    </td>
+                </tr>
+                    }
+
+                </table>
+            }
+            else
+            {
+                <p>Nenhum usuário para mostrar</p>
+            }
+        </div>
+    </div>
+</div>
+

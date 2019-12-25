@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using FishStore.Utility
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-md fixed-top navbar-toggleable-md m-0" style="background: rgba(0, 0, 0, 0.8)!important;">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img style="height:3rem" src="~/images/logo.png" alt="NavbarBrand" /></a>
+                <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index"><img style="height:3rem" src="~/images/logo.png" alt="NavbarBrand" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="custom-toggler-icon">
@@ -27,6 +29,8 @@
                 <div class="navbar-collapse collapse d-md-inline-flex flex-md-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole(SD.ManagerUser))
+                        {
                         <li class="nav-item dropdown navbar-textu">
                             <a class="nav-link dropdown-toggle navbar-textu p-0" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 GERENCIAR CONTEÚDO
@@ -35,11 +39,16 @@
                                 <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="Category" asp-area="Admin">CATEGORIA</a>
                                 <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">SUBCATEGORIA</a>
                                 <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="StoreItem" asp-area="Admin">ITENS</a>
-                                <a class="dropdown-item navbar-textu" href="#">USUÁRIOS</a>
+                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="User" asp-area="Admin">USUÁRIOS</a>
                             </div>
 
                         </li>
-
+                        }
+                        <li class="nav-item">
+                            <a href="#" class="nav-link navbar-textu">
+                                <i class="fas fa-shopping-cart"></i> (0)
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link navbar-textu" asp-area="" asp-controller="Home" asp-action="Products">PRODUTOS</a>
                         </li>

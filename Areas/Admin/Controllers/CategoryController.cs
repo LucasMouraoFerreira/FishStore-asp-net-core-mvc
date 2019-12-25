@@ -6,9 +6,12 @@ using FishStore.Data;
 using FishStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using FishStore.Utility;
 
 namespace FishStore.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class CategoryController : Controller
     {
