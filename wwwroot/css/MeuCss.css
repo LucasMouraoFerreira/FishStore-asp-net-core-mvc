@@ -75,11 +75,11 @@ button:focus, a:focus, a.btn:focus {
     display: inline-block;
 }
 
-.card {
+.card-deck .card {
     transition: all .3s ease;
 }
 
-    .card:hover {
+.card-deck .card:hover {
         transform: scale(1.05);
     }
 

@@ -24,7 +24,7 @@ namespace FishStore.Models
 
         [Display(Name = "Categoria")]
         public int CategoryId { get; set; }
-        
+
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
@@ -35,7 +35,7 @@ namespace FishStore.Models
         [ForeignKey("SubCategoryId")]
         public virtual SubCategory SubCategory { get; set; }
 
-        [Range(0,int.MaxValue,ErrorMessage ="Valor deve ser maior que 0")]
+        [Range(0, int.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]
         [Display(Name = "Volume(m³)")]
         public double Volume { get; set; }
 
