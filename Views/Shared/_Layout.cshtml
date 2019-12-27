@@ -1,4 +1,7 @@
 ﻿@using FishStore.Utility
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor HttpContextAccessor
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>FakeFishStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> 
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/MeuCss.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
@@ -31,27 +34,35 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.IsInRole(SD.ManagerUser))
                         {
-                        <li class="nav-item dropdown navbar-textu">
-                            <a class="nav-link dropdown-toggle navbar-textu p-0" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                GERENCIAR CONTEÚDO
-                            </a>
-                            <div class="dropdown-menu" style="background: rgba(0, 0, 0, 0.8) !important;" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="Category" asp-area="Admin">CATEGORIA</a>
-                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">SUBCATEGORIA</a>
-                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="StoreItem" asp-area="Admin">ITENS</a>
-                                <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="User" asp-area="Admin">USUÁRIOS</a>
-                            </div>
+                            <li class="nav-item dropdown navbar-textu">
+                                <a class="nav-link dropdown-toggle navbar-textu p-0" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    GERENCIAR CONTEÚDO
+                                </a>
+                                <div class="dropdown-menu" style="background: rgba(0, 0, 0, 0.8) !important;" aria-labelledby="navbarDropDownMenuLink">
+                                    <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="Category" asp-area="Admin">CATEGORIA</a>
+                                    <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">SUBCATEGORIA</a>
+                                    <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="StoreItem" asp-area="Admin">ITENS</a>
+                                    <a class="dropdown-item navbar-textu" asp-action="Index" asp-controller="User" asp-area="Admin">USUÁRIOS</a>
+                                </div>
 
-                        </li>
+                            </li>
                         }
-                        <li class="nav-item">
-                            <a href="#" class="nav-link navbar-textu">
-                                <i class="fas fa-shopping-cart"></i> (0)
-                            </a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link navbar-textu" asp-area="" asp-controller="Home" asp-action="Products">PRODUTOS</a>
                         </li>
+
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
+                        {
+                            <li class="nav-item">
+                                <a href="#" class="nav-link navbar-textu">
+                                    @{ 
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount");
+                                    }
+                                    <i class="fas fa-shopping-cart"></i> (@count)
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

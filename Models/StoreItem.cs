@@ -44,7 +44,7 @@ namespace FishStore.Models
         public double Weight { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]
-        [Display(Name = "Preço")]
+        [Display(Name = "Preço(R$)")]
         public double Price { get; set; }
     }
 }

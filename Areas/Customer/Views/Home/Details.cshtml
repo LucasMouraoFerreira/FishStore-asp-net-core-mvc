@@ -1,0 +1,122 @@
+﻿@model FishStore.Models.ShoppingCart
+@using FishStore.Extensions
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center" style="padding-top:90px">Detalhes</h1>
+<br />
+
+<div class="jumbotron">
+    <div class="container">
+
+        <form method="post">
+            <div class="border p-4 bg-white rounded row">
+                <input asp-for="StoreItemId" hidden />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="col-12 pb-4 d-md-none">
+                    <img src="@Model.StoreItem.Image" style="width:100%;border-radius:5px;border:1px solid #bbb9b9;" />
+                </div>
+
+                <div class="col-md-8">
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="StoreItem.Name" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input asp-for="StoreItem.Name" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="StoreItem.Description" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea asp-for="StoreItem.Description" readonly class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="StoreItem.Price" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input asp-for="StoreItem.Price" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="StoreItem.Volume" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input asp-for="StoreItem.Volume" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="StoreItem.Weight" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input asp-for="StoreItem.Weight" readonly class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="StoreItem.CategoryId" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input asp-for="StoreItem.Category.Name" readonly class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="StoreItem.SubCategoryId" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input asp-for="StoreItem.SubCategory.Name" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 font-weight-bold">
+                            <label asp-for="Count" class="text-info font-weight-bold"></label>
+                        </div>
+                        <div class="col-md-8">
+                            <input asp-for="Count" class="form-control" />
+                            <span asp-validation-for="Count" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4 pb-sm-2">
+                            <button type="submit" value="Adicionar ao Carrinho" class="btn btn-success form-control">Adicionar ao Carrinho</button>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-action="Products" class="btn btn-primary form-control">Voltar</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-3 offset-1 d-none d-md-block">
+                    <img src="@Model.StoreItem.Image" style="width:100%;border-radius:5px;border:1px solid #bbb9b9;" />
+                </div>
+
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
