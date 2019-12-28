@@ -36,6 +36,8 @@ namespace FishStore.Models
         public string PostalCode { get; set; }
 
         public double PostalPrice { get; set; }
+
+        public double PostalTime { get; set; }
         
         public string Status { get; set; }
         

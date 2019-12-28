@@ -36,11 +36,11 @@ namespace FishStore.Models
         public virtual SubCategory SubCategory { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]
-        [Display(Name = "Volume(m³)")]
+        [Display(Name = "Volume(cm³)")]
         public double Volume { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]
-        [Display(Name = "Massa(g)")]
+        [Display(Name = "Massa(kg)")]
         public double Weight { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]

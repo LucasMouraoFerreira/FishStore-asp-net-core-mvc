@@ -66,7 +66,7 @@
                                         <div class="col-7">
                                             <input asp-for="@Model.OrderHeader.PostalCode" id="txtPostalCode" class="form-control" placeholder="CEP" />
                                         </div>
-                                        <div class="col-5"style="margin-top:2px;">
+                                        <div class="col-5" style="margin-top:2px;">
                                             <button type="submit" class="btn btn-sm form-control btn-outline-success" id="btnPostal" asp-action="AddPostalCode">
                                                 Calcular Frete
                                             </button>
@@ -89,7 +89,16 @@
                         </div>
                         <div class="card-footer">
                             <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
-                                <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Finalizar Compra</a>
+                                @if (Model.OrderHeader.PostalPrice > 0)
+                                {
+                                    <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Finalizar Compra</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn btn-success form-control">Finalizar Compra</a>
+                                    <p class="text-danger bg-ligth rounded text-center pt-2 font-weight-bold">Informe um CEP válido!</p>
+                                }
+
                             </div>
                         </div>
                     </div>
