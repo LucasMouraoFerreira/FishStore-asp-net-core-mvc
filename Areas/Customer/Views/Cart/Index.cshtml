@@ -75,9 +75,17 @@
                                             </button>
                                         </div>
                                     </div>
+                                    @if (Model.OrderHeader.PostalPrice > 0)
+                                    {
+                                        <ul class="list-group mt-2">
+                                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                                <span class="text-info">Valor Frete: <strong>@Model.OrderHeader.PostalPrice.ToString("C2")</strong>  Prazo: <strong>@Model.OrderHeader.PostalTime.ToString()</strong> dias úteis.</span>
+                                            </li>
+                                        </ul>
+                                    }
                                 </div>
                                 <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
-                                    <ul class="list-group">
+                                    <ul class="list-group mt-2">
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <span class="text-info">Total(BR)</span>
                                             <strong class="text-info"><span id="txtOrderTotal">@Model.OrderHeader.OrderTotal.ToString("C2")</span></strong>
@@ -117,3 +125,21 @@
     }
 
 </form>
+
+@section Scripts{
+
+    <script>
+        $(function () {
+            var postalCode = document.getElementById("txtPostalCode").value;
+            if (postalCode.length) {
+                document.getElementById("btnPostal").style.display = 'none';
+                document.getElementById("btnRemovePostal").style.display = '';
+            }
+            else {
+                document.getElementById("btnPostal").style.display = '';
+                document.getElementById("btnRemovePostal").style.display = 'none';
+            }
+        });
+    </script>
+
+}
