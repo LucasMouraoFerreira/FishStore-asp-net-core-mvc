@@ -14,6 +14,21 @@ namespace FishStore.Utility
 		public const string ManagerUser = "Manager";
 		public const string CustomerEndUser = "Customer";
 		public const string ssPostalCode = "ssPostalCode";
+		public const string ssUserName = "ssUserName";
+		public const string ssUserAddress = "ssUserAddress";
+		public const string ssUserCity = "ssUserCity";
+		public const string ssUserState = "ssUserState";
+
+		public const string StatusSubmitted = "Submitted";
+		public const string StatusInProcess = "Being Prepare";
+		public const string StatusReady = "Ready to Post";
+		public const string StatusPosted = "Posted";
+		public const string StatusCanceled = "Canceled";
+
+		public const string PaymentStatusPending = "Pending";
+		public const string PaymentStatusApproved = "Approved";
+		public const string PaymentStatusRejected = "Rejected";
+
 
 		public static string ConvertToRawHtml(string source)
 		{

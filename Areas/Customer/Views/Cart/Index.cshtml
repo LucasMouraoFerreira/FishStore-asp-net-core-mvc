@@ -61,30 +61,7 @@
                             }
 
                             <div class="row">
-                                <div class="col-12 col-md-5">
-                                    <div class="row">
-                                        <div class="col-7">
-                                            <input asp-for="@Model.OrderHeader.PostalCode" id="txtPostalCode" class="form-control" placeholder="CEP" />
-                                        </div>
-                                        <div class="col-5" style="margin-top:2px;">
-                                            <button type="submit" class="btn btn-sm form-control btn-outline-success" id="btnPostal" asp-action="AddPostalCode">
-                                                Calcular Frete
-                                            </button>
-                                            <button type="submit" class="btn btn-sm form-control btn-outline-danger" style="display:none;" id="btnRemovePostal" asp-action="RemovePostalCode">
-                                                Remover
-                                            </button>
-                                        </div>
-                                    </div>
-                                    @if (Model.OrderHeader.PostalPrice > 0)
-                                    {
-                                        <ul class="list-group mt-2">
-                                            <li class="list-group-item d-flex justify-content-between bg-light">
-                                                <span class="text-info">Valor Frete: <strong>@Model.OrderHeader.PostalPrice.ToString("C2")</strong>  Prazo: <strong>@Model.OrderHeader.PostalTime.ToString()</strong> dias úteis.</span>
-                                            </li>
-                                        </ul>
-                                    }
-                                </div>
-                                <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
+                                <div class="col-12 col-md-6 col-lg-4 pr-4">
                                     <ul class="list-group mt-2">
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <span class="text-info">Total(BR)</span>
@@ -97,16 +74,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
-                                @if (Model.OrderHeader.PostalPrice > 0)
-                                {
-                                    <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Finalizar Compra</a>
-                                }
-                                else
-                                {
-                                    <a href="#" class="btn btn-success form-control">Finalizar Compra</a>
-                                    <p class="text-danger bg-ligth rounded text-center pt-2 font-weight-bold">Informe um CEP válido!</p>
-                                }
-
+                                <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Pagamento</a>
                             </div>
                         </div>
                     </div>
@@ -125,21 +93,3 @@
     }
 
 </form>
-
-@section Scripts{
-
-    <script>
-        $(function () {
-            var postalCode = document.getElementById("txtPostalCode").value;
-            if (postalCode.length) {
-                document.getElementById("btnPostal").style.display = 'none';
-                document.getElementById("btnRemovePostal").style.display = '';
-            }
-            else {
-                document.getElementById("btnPostal").style.display = '';
-                document.getElementById("btnRemovePostal").style.display = 'none';
-            }
-        });
-    </script>
-
-}

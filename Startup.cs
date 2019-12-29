@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using FishStore.Services;
+using FishStore.Utility;
+using Stripe;
 
 namespace FishStore
 {
@@ -37,6 +39,8 @@ namespace FishStore
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -75,6 +79,8 @@ namespace FishStore
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
+
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FishStore.Data;
+using FishStore.Models;
 using FishStore.Models.ViewModels;
 using FishStore.Utility;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,7 @@ namespace FishStore.Areas.Customer.Controllers
             _db = db;
         }
 
+        //INDEX - GET
         public async Task<IActionResult> Index()
         {
                
@@ -51,22 +53,101 @@ namespace FishStore.Areas.Customer.Controllers
                 detailCart.listCart = cart.ToList();
             }
 
-            double weigth = 0.0;
-            double volume = 0.0;
 
             foreach(var list in detailCart.listCart)
             {
                 list.StoreItem = await _db.StoreItem.FirstOrDefaultAsync(m => m.Id == list.StoreItemId);
                 detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotal + (list.StoreItem.Price * list.Count);
                 list.StoreItem.Description = SD.ConvertToRawHtml(list.StoreItem.Description);
-                weigth += list.StoreItem.Weight;
-                volume += list.StoreItem.Volume;
             }
             detailCart.OrderHeader.OrderTotalOriginal = detailCart.OrderHeader.OrderTotal;
+                
 
+            return View(detailCart);
+        }
+
+        //SUMMARY - GET
+        public async Task<IActionResult> Summary()
+        {
+            
+            detailCart = new OrderDetailsCart()
+            {
+                OrderHeader = new Models.OrderHeader()
+            };
+
+            detailCart.OrderHeader.OrderTotal = 0.0;
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            ApplicationUser applicationUser = await _db.ApplicationUser.Where(c => c.Id == claim.Value).FirstOrDefaultAsync(); 
+            if (claim != null)
+            {
+                var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
+                HttpContext.Session.SetInt32("ssCartCount", cnt);
+            }
+
+            var cart = _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value);
+            if (cart != null)
+            {
+                detailCart.listCart = cart.ToList();
+            }
+
+            double weigth = 0.0;
+            double volume = 0.0;
+
+            foreach (var list in detailCart.listCart)
+            {
+                list.StoreItem = await _db.StoreItem.FirstOrDefaultAsync(m => m.Id == list.StoreItemId);
+                detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotal + (list.StoreItem.Price * list.Count);
+                weigth += (list.StoreItem.Weight * list.Count);
+                volume += (list.StoreItem.Volume * list.Count);
+            }
+            detailCart.OrderHeader.OrderTotalOriginal = detailCart.OrderHeader.OrderTotal;
+            
+            if (HttpContext.Session.GetString(SD.ssUserName) != null)
+            {
+                detailCart.OrderHeader.Name = HttpContext.Session.GetString(SD.ssUserName);
+            }
+            else
+            {
+                detailCart.OrderHeader.Name = applicationUser.Name;
+            }
+            if (HttpContext.Session.GetString(SD.ssUserAddress) != null)
+            {
+                detailCart.OrderHeader.Address = HttpContext.Session.GetString(SD.ssUserAddress);
+            }
+            else
+            {
+                detailCart.OrderHeader.Address = applicationUser.StreetAddress;
+            }
+            if (HttpContext.Session.GetString(SD.ssUserCity) != null)
+            {
+                detailCart.OrderHeader.City = HttpContext.Session.GetString(SD.ssUserCity);
+            }
+            else
+            {
+                detailCart.OrderHeader.City = applicationUser.City;
+            }
+            if (HttpContext.Session.GetString(SD.ssUserState) != null)
+            {
+                detailCart.OrderHeader.State = HttpContext.Session.GetString(SD.ssUserState);
+            }
+            else
+            {
+                detailCart.OrderHeader.State = applicationUser.State;
+            }
+                       
             if (HttpContext.Session.GetString(SD.ssPostalCode) != null)
             {
                 detailCart.OrderHeader.PostalCode = HttpContext.Session.GetString(SD.ssPostalCode);
+                string[] precoPrazo = await SD.GetPriceAndTimePostalServiceAsync(detailCart.OrderHeader.PostalCode, weigth, volume);
+                detailCart.OrderHeader.PostalPrice = Convert.ToDouble(precoPrazo[0]);
+                detailCart.OrderHeader.PostalTime = Convert.ToDouble(precoPrazo[1]);
+                detailCart.OrderHeader.OrderTotal += detailCart.OrderHeader.PostalPrice;
+            }
+            else
+            {
+                detailCart.OrderHeader.PostalCode = applicationUser.PostalCode;
                 string[] precoPrazo = await SD.GetPriceAndTimePostalServiceAsync(detailCart.OrderHeader.PostalCode, weigth, volume);
                 detailCart.OrderHeader.PostalPrice = Convert.ToDouble(precoPrazo[0]);
                 detailCart.OrderHeader.PostalTime = Convert.ToDouble(precoPrazo[1]);
@@ -76,25 +157,90 @@ namespace FishStore.Areas.Customer.Controllers
             return View(detailCart);
         }
 
+        //SUMMARY - POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Summary")]
+        public async Task<IActionResult> SummaryPost()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            detailCart.listCart = await _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value).ToListAsync();            
+
+            detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+            detailCart.OrderHeader.OrderDate = DateTime.Now;
+            detailCart.OrderHeader.UserId = claim.Value;
+            detailCart.OrderHeader.Status = SD.PaymentStatusPending;
+
+            List<OrderDetails> orderDetailsList = new List<OrderDetails>();
+
+            _db.OrderHeader.Add(detailCart.OrderHeader);
+            await _db.SaveChangesAsync();
+
+            detailCart.OrderHeader.OrderTotalOriginal = 0.0;
+
+            if (claim != null)
+            {
+                var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
+                HttpContext.Session.SetInt32("ssCartCount", cnt);
+            }
+
+           
+
+            foreach (var item in detailCart.listCart)
+            {
+                item.StoreItem = await _db.StoreItem.FirstOrDefaultAsync(m => m.Id == item.StoreItemId);
+                OrderDetails orderDetails = new OrderDetails
+                {
+                    StoreItemId = item.StoreItemId,
+                    OrderId = detailCart.OrderHeader.Id,
+                    Description = item.StoreItem.Description,
+                    Name = item.StoreItem.Name,
+                    Price = item.StoreItem.Price,
+                    Count = item.Count
+                };
+                detailCart.OrderHeader.OrderTotalOriginal += orderDetails.Count * orderDetails.Price;
+                _db.OrderDetails.Add(orderDetails);
+            }
+
+            detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotalOriginal + detailCart.OrderHeader.PostalPrice;
+
+            _db.ShoppingCart.RemoveRange(detailCart.listCart);
+            HttpContext.Session.SetInt32("ssCartCount", 0);
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Confirm","Order",new { id = detailCart.OrderHeader.Id });
+        }
+
+
         public IActionResult AddPostalCode()
         {
-            if (detailCart.OrderHeader.PostalCode == null)
+            if (detailCart.OrderHeader.PostalCode != null)
             {
-                detailCart.OrderHeader.PostalCode = "";
+                HttpContext.Session.SetString(SD.ssPostalCode, detailCart.OrderHeader.PostalCode);
             }
-            HttpContext.Session.SetString(SD.ssPostalCode, detailCart.OrderHeader.PostalCode);
+            if (detailCart.OrderHeader.State != null)
+            {
+                HttpContext.Session.SetString(SD.ssUserState, detailCart.OrderHeader.State);
+            }
+            if (detailCart.OrderHeader.Name != null)
+            {
+                HttpContext.Session.SetString(SD.ssUserName, detailCart.OrderHeader.Name);
+            }
+            if (detailCart.OrderHeader.City != null)
+            {
+                HttpContext.Session.SetString(SD.ssUserCity, detailCart.OrderHeader.City);
+            }
+            if (detailCart.OrderHeader.Address != null)
+            {
+                HttpContext.Session.SetString(SD.ssUserAddress, detailCart.OrderHeader.Address);
+            }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Summary));
         }
-
-        public IActionResult RemovePostalCode()
-        {
-            
-            HttpContext.Session.SetString(SD.ssPostalCode, string.Empty);
-
-            return RedirectToAction(nameof(Index));
-        }
-
+                
         public async Task<IActionResult> Plus(int cartId)
         {
             var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);

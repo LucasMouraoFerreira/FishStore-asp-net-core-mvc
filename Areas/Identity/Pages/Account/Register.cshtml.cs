@@ -70,14 +70,20 @@ namespace FishStore.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Nome")]
             public string Name { get; set; }
+            [Required]
             [Display(Name = "Endereço")]
             public string StreetAddress { get; set; }
             [Display(Name = "Telefone")]
             public string PhoneNumber { get; set; }
+            [Required]
             [Display(Name = "Cidade")]
             public string City { get; set; }
+            [Required]
             [Display(Name = "Estado")]
             public string State { get; set; }
+            [Required]
+            [StringLength(8, MinimumLength = 8, ErrorMessage = "Esse campo deve conter 8 dígitos!")]
+            [RegularExpression("^[0-9]*$", ErrorMessage = "O CEP deve conter apenas dígitos!")]
             [Display(Name = "CPE")]
             public string PostalCode { get; set; }
         }

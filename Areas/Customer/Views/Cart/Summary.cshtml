@@ -1,0 +1,204 @@
+﻿@model FishStore.Models.ViewModels.OrderDetailsCart
+@using Microsoft.Extensions.Options
+
+@inject IOptions<FishStore.Utility.StripeSettings> Stripe
+
+@{
+    ViewData["Title"] = "Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="padding-top:60px"></h1>
+<form method="post">
+    @if (Model.listCart.Count > 0)
+    {
+        <div class="jumbotron">
+            <div class="bg-white border rounded p-4">
+
+                <input id="userId" asp-for="@Model.listCart[0].ApplicationUserId" hidden />
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header bg-dark ml-0 text-light row container">
+                            <div class="col-6">
+                                <i class="fas fa-money-check-alt"></i> &nbsp;
+                                Pagamento
+                            </div>
+                            <div class="col-6 text-right">
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-outline-light">Voltar ao Carrinho</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="container rounded p-2">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6 pb-4">
+                                        <div class="text-center">
+                                            <h4 class="font-weight-bold mb-3">
+                                                INFORMAÇÕES PARA ENTREGA
+                                            </h4>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-3">
+                                                <label class="font-weight-bold">Nome</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input asp-for="@Model.OrderHeader.Name" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-3">
+                                                <label class="font-weight-bold">Endereço</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input asp-for="@Model.OrderHeader.Address" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-3">
+                                                <label class="font-weight-bold">Cidade</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input asp-for="@Model.OrderHeader.City" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-3">
+                                                <label class="font-weight-bold">Estado</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input asp-for="@Model.OrderHeader.State" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-3">
+                                                <label class="font-weight-bold">CEP</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input asp-for="@Model.OrderHeader.PostalCode" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            @if (Model.OrderHeader.PostalPrice > 0)
+                                            {
+                                                <div class="col-12">
+                                                    <ul class="list-group text-center my-2">
+                                                        <li class="list-group-item d-flex justify-content-center bg-light">
+                                                            <span class="text-info">Valor Frete: <strong>@Model.OrderHeader.PostalPrice.ToString("C2")</strong>  Prazo: <strong>@Model.OrderHeader.PostalTime.ToString()</strong> dias úteis.</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-12">
+                                                    <ul class="list-group text-center my-2">
+                                                        <li class="list-group-item d-flex justify-content-center bg-light">
+                                                            <span class="text-danger">CEP inválido! informe um novo CEP e aperte no botão "Modificar"</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button type="submit" class="btn btn-sm form-control btn-outline-success" id="btnPostal" asp-action="AddPostalCode">
+                                                        Modificar
+                                                    </button>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6 pb-4">
+                                        <div class="text-center">
+                                            <h4 class="font-weight-bold mb-3">
+                                                <span>DETALHES DA COMPRA</span>
+                                            </h4>
+                                        </div>
+                                        <ul class="list-group mb-3">
+                                            @foreach (var details in Model.listCart)
+                                            {
+                                                <li class="list-group-item d-flex justify-content-between">
+                                                    <div>
+                                                        <h6 class="my-0 font-weight-bold">@details.StoreItem.Name</h6>
+                                                        <small class="text-muted">Quantidade: @details.Count</small>
+                                                    </div>
+                                                    <span class="text-muted">@((details.StoreItem.Price * details.Count).ToString("C2"))</span>
+                                                </li>
+                                            }
+                                            @if (Model.OrderHeader.PostalPrice > 0)
+                                            {
+                                                <li class="list-group-item d-flex justify-content-between">
+                                                    <div class="text-success">
+                                                        <h6 class="my-0 font-weight-bold">Frete</h6>
+                                                        <small>Sedex</small>
+                                                    </div>
+                                                    <span class="text-muted">@((Model.OrderHeader.PostalPrice).ToString("C2"))</span>
+                                                </li>
+                                            }
+                                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                                <div class="text-info">
+                                                    <h6 class="my-0">Total(BR)</h6>
+                                                </div>
+                                                <strong class="text-info">@((Model.OrderHeader.OrderTotal).ToString("C2"))</strong>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
+                                    @if (Model.OrderHeader.PostalPrice > 0)
+                                    {
+                                        var OrderTotalForStrip = Model.OrderHeader.OrderTotal * 100;
+                                        
+                                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                data-key="@Stripe.Value.PublishableKey"
+                                                data-amount="@OrderTotalForStrip"
+                                                data-name=" Fake Fish Store"
+                                                data-label="Finalizar Compra"
+                                                data-description="Os Melhores Peixes!"
+                                                data-locale="auto"
+                                                data-allow-remember-me="False"
+                                                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                                data-zip-code="true">
+                                        </script>
+                                        <script>
+                                            document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                        </script>
+                                        <button type="submit" id="btnPlaceOrder"  value="Finalizar Compra" class="btn btn-success form-control">Finalizar Compra</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Finalizar Compra" class="btn btn-success form-control">Finalizar Compra</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="jumbotron">
+            <h3 class="font-weight-bold text-center">Carrinho não possui nenhum item.</h3>
+        </div>
+    }
+
+</form>
+
+@section Scripts{
+
+    <script>
+        function validateInput() {
+            alert("Informe um CEP válido!");
+            return false;
+        }
+    </script>
+
+}
+
