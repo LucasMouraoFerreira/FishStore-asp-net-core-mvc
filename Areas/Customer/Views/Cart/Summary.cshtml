@@ -30,7 +30,9 @@
                         <div class="card-body">
                             <div class="container rounded p-2">
                                 <div class="row">
+
                                     <div class="col-12 col-lg-6 pb-4">
+
                                         <div class="text-center">
                                             <h4 class="font-weight-bold mb-3">
                                                 INFORMAÇÕES PARA ENTREGA
@@ -41,7 +43,7 @@
                                                 <label class="font-weight-bold">Nome</label>
                                             </div>
                                             <div class="col-9">
-                                                <input asp-for="@Model.OrderHeader.Name" type="text" class="form-control" />
+                                                <input asp-for="@Model.OrderHeader.Name" readonly type="text" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="row my-1">
@@ -49,7 +51,7 @@
                                                 <label class="font-weight-bold">Endereço</label>
                                             </div>
                                             <div class="col-9">
-                                                <input asp-for="@Model.OrderHeader.Address" type="text" class="form-control" />
+                                                <input asp-for="@Model.OrderHeader.Address" readonly type="text" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="row my-1">
@@ -57,7 +59,7 @@
                                                 <label class="font-weight-bold">Cidade</label>
                                             </div>
                                             <div class="col-9">
-                                                <input asp-for="@Model.OrderHeader.City" type="text" class="form-control" />
+                                                <input asp-for="@Model.OrderHeader.City" readonly type="text" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="row my-1">
@@ -65,7 +67,7 @@
                                                 <label class="font-weight-bold">Estado</label>
                                             </div>
                                             <div class="col-9">
-                                                <input asp-for="@Model.OrderHeader.State" type="text" class="form-control" />
+                                                <input asp-for="@Model.OrderHeader.State" readonly type="text" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="row my-1">
@@ -73,7 +75,7 @@
                                                 <label class="font-weight-bold">CEP</label>
                                             </div>
                                             <div class="col-9">
-                                                <input asp-for="@Model.OrderHeader.PostalCode" type="text" class="form-control" />
+                                                <input asp-for="@Model.OrderHeader.PostalCode" readonly type="text" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="row my-1">
@@ -92,19 +94,15 @@
                                                 <div class="col-12">
                                                     <ul class="list-group text-center my-2">
                                                         <li class="list-group-item d-flex justify-content-center bg-light">
-                                                            <span class="text-danger">CEP inválido! informe um novo CEP e aperte no botão "Modificar"</span>
+                                                            <span class="text-danger">CEP inválido! Volte ao carrinho e informe um CEP válido</span>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="col-12">
-                                                    <button type="submit" class="btn btn-sm form-control btn-outline-success" id="btnPostal" asp-action="AddPostalCode">
-                                                        Modificar
-                                                    </button>
-                                                </div>
-                                            }
-
+                                            }                                            
                                         </div>
+
                                     </div>
+
                                     <div class="col-12 col-lg-6 pb-4">
                                         <div class="text-center">
                                             <h4 class="font-weight-bold mb-3">
@@ -144,61 +142,51 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
-                                    @if (Model.OrderHeader.PostalPrice > 0)
-                                    {
-                                        var OrderTotalForStrip = Model.OrderHeader.OrderTotal * 100;
-                                        
-                                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                                data-key="@Stripe.Value.PublishableKey"
-                                                data-amount="@OrderTotalForStrip"
-                                                data-name=" Fake Fish Store"
-                                                data-label="Finalizar Compra"
-                                                data-description="Os Melhores Peixes!"
-                                                data-locale="auto"
-                                                data-allow-remember-me="False"
-                                                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                                                data-zip-code="true">
-                                        </script>
-                                        <script>
-                                            document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-                                        </script>
-                                        <button type="submit" id="btnPlaceOrder"  value="Finalizar Compra" class="btn btn-success form-control">Finalizar Compra</button>
-                                    }
-                                    else
-                                    {
-                                        <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Finalizar Compra" class="btn btn-success form-control">Finalizar Compra</button>
-                                    }
+
+                                    @{ var OrderTotalForStrip = (Model.OrderHeader.OrderTotal) * 100; }
+
+                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="@Stripe.Value.PublishableKey"
+                                            data-amount="@OrderTotalForStrip"
+                                            data-name=" Fake Fish Store"
+                                            data-label="Finalizar Compra"
+                                            data-description="Os Melhores Peixes!"
+                                            data-locale="auto"
+                                            data-currency="brl"
+                                            data-panel-label="Pagar"
+                                            data-allow-remember-me="false"
+                                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                            data-zip-code="true">
+                                    </script>
+                                    <script>
+                                        document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                    </script>
+                                    <button type="submit" id="btnPlaceOrder" value="Finalizar Compra" class="btn btn-success form-control">Finalizar Compra</button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     }
+
     else
     {
         <div class="jumbotron">
             <h3 class="font-weight-bold text-center">Carrinho não possui nenhum item.</h3>
         </div>
     }
-
 </form>
+
 
 @section Scripts{
 
-    <script>
-        function validateInput() {
-            alert("Informe um CEP válido!");
-            return false;
-        }
-    </script>
 
 }
 

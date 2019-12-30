@@ -60,22 +60,49 @@ namespace FishStore.Utility
 
 		public static async Task<string[]> GetPriceAndTimePostalServiceAsync(string cep, double weight, double volume)
 		{
-			double squareSideLength = Math.Pow(volume, 1.0 / 3.0); 
+			double squareSideLength = Math.Pow(volume, 1.0 / 3.0);
+			double sideUsed = 0.0;
+			double weightUsed = 0.0;
+
+			if(weight < 1.0)
+			{
+				weightUsed = 1.0;
+			}
+			else if(weight > 29)
+			{
+				weightUsed = 29.0;
+			}
+			else
+			{
+				weightUsed = weight;
+			}
+
+			if(squareSideLength > 66.0)
+			{
+				sideUsed = 66.0;
+			}else if(squareSideLength < 17.0)
+			{
+				sideUsed = 17.0;
+			}
+			else
+			{
+				sideUsed = squareSideLength;
+			}
 
 			string nCdEmpresa = string.Empty;
 			string sDsSenha = string.Empty;
 			
 			string nCdServico = "40010"; // Sedex
 			
-			string sCepOrigem = "05650001"; // CEP Praça Sete 30130010
+			string sCepOrigem = "30130010"; // CEP Praça Sete 30130010
 			string sCepDestino = cep;
 
-			string nVlPeso = "3";// weight.ToString("F0"); // peso em kg da encomenda
+			string nVlPeso = weightUsed.ToString("F0"); // peso em kg da encomenda / peso máximo de 30kg
 			int nCdFormato = 1; // formato caixa
 
-			decimal nVlComprimento = 20; // (decimal)squareSideLength;
-			decimal nVlAltura = 20; // (decimal)squareSideLength;
-			decimal nVlLargura = 20; // (decimal)squareSideLength;
+			decimal nVlComprimento = (decimal)sideUsed; // medidas em cm entre 16cm e 105cm e a soma das dimensões não deve ultrapassar 200cm
+			decimal nVlAltura = (decimal)sideUsed;
+			decimal nVlLargura = (decimal)sideUsed;
 			decimal nVlDiamentro = 0;
 			
 			string sCdMaoPropria = "N";

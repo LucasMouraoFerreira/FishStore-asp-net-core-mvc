@@ -61,7 +61,83 @@
                             }
 
                             <div class="row">
-                                <div class="col-12 col-md-6 col-lg-4 pr-4">
+                                <div class="col-12 col-lg-6 pb-4">
+
+                                    <div class="text-center">
+                                        <h4 class="font-weight-bold mb-3">
+                                            INFORMAÇÕES PARA ENTREGA
+                                        </h4>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label class="font-weight-bold">Nome</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderHeader.Name" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label class="font-weight-bold">Endereço</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderHeader.Address" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label class="font-weight-bold">Cidade</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderHeader.City" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label class="font-weight-bold">Estado</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderHeader.State" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label class="font-weight-bold">CEP</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderHeader.PostalCode" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        @if (Model.OrderHeader.PostalPrice > 0)
+                                        {
+                                            <div class="col-12">
+                                                <ul class="list-group text-center my-2">
+                                                    <li class="list-group-item d-flex justify-content-center bg-light">
+                                                        <span class="text-info">Valor Frete: <strong>@Model.OrderHeader.PostalPrice.ToString("C2")</strong>  Prazo: <strong>@Model.OrderHeader.PostalTime.ToString()</strong> dias úteis.</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-12">
+                                                <ul class="list-group text-center my-2">
+                                                    <li class="list-group-item d-flex justify-content-center bg-light">
+                                                        <span class="text-danger">CEP inválido! informe um novo CEP e aperte no botão "Modificar"</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        }
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-sm form-control btn-outline-success" id="btnPostal" asp-action="AddPostalCode">
+                                                Modificar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-lg-6 pb-4">
                                     <ul class="list-group mt-2">
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <span class="text-info">Total(BR)</span>
@@ -69,12 +145,21 @@
                                         </li>
                                     </ul>
                                 </div>
+
                             </div>
 
                         </div>
                         <div class="card-footer">
                             <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
-                                <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Pagamento</a>
+                                @if (Model.OrderHeader.PostalPrice > 0)
+                                {
+                                    <a asp-action="Summary" asp-area="Customer" asp-controller="Cart" class="btn btn-success form-control">Pagamento</a>
+                                }
+                                else
+                                {
+                                    <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Finalizar Compra" class="btn btn-success form-control">Finalizar Compra</button>
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -93,3 +178,14 @@
     }
 
 </form>
+
+@section Scripts{
+
+    <script>
+        function validateInput() {
+            alert("Informe um CEP válido!");
+            return false;
+        }
+    </script>
+
+}
