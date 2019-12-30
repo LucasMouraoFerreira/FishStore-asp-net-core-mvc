@@ -1,0 +1,150 @@
+﻿@model FishStore.Models.ViewModels.OrderListViewModel
+@using FishStore.Utility
+@{
+    ViewData["Title"] = "PostItems";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center" style="padding-top:90px">Pedidos Prontos Para Postar</h1>
+<br />
+
+<div class="pb-3" style="display:inline-block; width:100%; text-align:center;color: #1ebba3; color: #1ebba3;">
+    <i class="fab fa-pagelines" style="transform: scale3d(-2,2,2); margin-right: 15px;"></i>
+    <i class="fas fa-fish" style="color: #1ebba3; transform: scale(2); margin-right:15px;"></i>
+    <i class="fab fa-pagelines" style="color: #1ebba3; transform: scale(2);"></i>
+</div>
+
+<form method="get">
+    <div class="jumbotron">
+        <div class="border container rounded bg-white">
+
+            <br />
+            <div>
+                @if (Model.Orders.Count() > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped border">
+
+                            <tr class="table-secondary text-center">
+                                <th>
+                                    @Html.DisplayNameFor(m => m.Orders[0].OrderHeader.Id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(m => m.Orders[0].OrderHeader.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(m => m.Orders[0].OrderHeader.ApplicationUser.Email)
+                                </th>
+                                <th>
+                                    Data
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(m => m.Orders[0].OrderHeader.OrderTotal)
+                                </th>
+
+                                <th>
+
+                                </th>
+                            </tr>
+
+                            @foreach (var item in Model.Orders)
+                            {
+                                <tr class="text-center">
+                                    <td>
+                                        @Html.DisplayFor(m => item.OrderHeader.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.OrderHeader.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.OrderHeader.ApplicationUser.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.OrderHeader.OrderDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.OrderHeader.OrderTotal)
+                                    </td>
+
+                                    <td>
+                                        <button type="button" class="btn btn-success anchorDetail" data-id="@item.OrderHeader.Id" data-toggle="modal">
+                                            <i class="far fa-list-alt"></i> Detalhes
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                        <div page-model="@Model.PagingInfo" page-classes-enabled="true" page-class="btn border"
+                             page-class-normal="btn btn-light" page-class-selected="btn btn-info active"
+                             class="btn-group float-right m-3">
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <p>Nenhum pedido para mostrar</p>
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog-centered modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-light">
+                <div class="col-10 offset-1">
+                    <center><h5 class="modal-title">Detalhes do Pedido</h5></center>
+                </div>
+                <div class="col-1">
+                    <button type="button" class="float-right btn-outline-secondary close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body justify-content-center" id="myModalContent">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        var PostBackURL = '/Customer/Order/GetOrderDetails';
+
+        $(function () {
+            $(".anchorDetail").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+
+                $.ajax({
+                    type: "GET",
+                    url: PostBackURL,
+                    contentType: "application/json; charset-utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Falha em carregar");
+                    }
+                });
+            });
+
+        });
+
+
+
+    </script>
+
+}
+

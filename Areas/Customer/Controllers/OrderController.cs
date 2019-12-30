@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using FishStore.Data;
 using FishStore.Models;
@@ -107,6 +108,49 @@ namespace FishStore.Areas.Customer.Controllers
             return View(orderDetailsVM);
         }
 
+        [Authorize(Roles = SD.ManagerUser)]
+        public async Task<IActionResult> OrderPickUp(int productPage = 1)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+
+            OrderListViewModel orderListVM = new OrderListViewModel()
+            {
+                Orders = new List<OrderDetailsViewModel>()
+            };
+
+            StringBuilder param = new StringBuilder();
+            param.Append("/Customer/Order/OrderHistory?productPage=:");
+
+            List<OrderHeader> OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u => u.Status == SD.StatusReady).ToListAsync();
+
+            foreach (OrderHeader item in OrderHeaderList)
+            {
+                OrderDetailsViewModel individual = new OrderDetailsViewModel
+                {
+                    OrderHeader = item,
+                    OrderDetails = await _db.OrderDetails.Where(o => o.OrderId == item.Id).ToListAsync()
+                };
+                orderListVM.Orders.Add(individual);
+            }
+
+            var count = orderListVM.Orders.Count;
+            orderListVM.Orders = orderListVM.Orders.OrderByDescending(p => p.OrderHeader.Id)
+                                 .Skip((productPage - 1) * PageSize)
+                                 .Take(PageSize).ToList();
+
+            orderListVM.PagingInfo = new PagingInfo
+            {
+                CurrentPage = productPage,
+                ItemsPerPage = PageSize,
+                TotalItem = count,
+                urlParam = param.ToString()
+            };
+
+            return View(orderListVM);
+        }
+
         public async Task<IActionResult> GetOrderDetails(int id)
         {
             OrderDetailsViewModel orderDetailsViewModel = new OrderDetailsViewModel()
@@ -150,6 +194,17 @@ namespace FishStore.Areas.Customer.Controllers
             orderHeader.Status = SD.StatusCanceled;
             await _db.SaveChangesAsync();
             return RedirectToAction("ManageOrder", "Order");
+        }
+
+        [Authorize(Roles = SD.ManagerUser)]
+        [ActionName("OrderPickUp")]
+        [HttpPost]
+        public async Task<IActionResult> OrderPickUpPost(int orderId)
+        {
+            OrderHeader orderHeader = await _db.OrderHeader.FindAsync(orderId);
+            orderHeader.Status = SD.StatusPosted;
+            await _db.SaveChangesAsync();
+            return RedirectToAction("OrderPickUp", "Order");
         }
     }
 }
