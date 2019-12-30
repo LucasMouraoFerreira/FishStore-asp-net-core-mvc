@@ -1,0 +1,89 @@
+﻿@model string
+@using FishStore.Utility
+
+<div style="width:100%">
+    @if (Model == SD.StatusSubmitted)
+    {
+        <div class="row">
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-money-check fa-3x"></i>
+                <h4>Pagamento Aceito</h4>
+            </div>
+            <div class="col-3 text-center">
+                <i class="fas fa-people-carry fa-3x"></i>
+                <h4>Preparando Para Envio</h4>
+            </div>
+            <div class="col-3 text-center">
+                <i class="fas fa-box fa-3x"></i>
+                <h4>Pedido Pronto</h4>
+            </div>
+            <div class="col-3 text-center">
+                <i class="fas fa-truck-moving fa-3x"></i>
+                <h4>Pedido Postado</h4>
+            </div>
+        </div>
+    }
+    @if (Model == SD.StatusInProcess)
+    {
+        <div class="row">
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-money-check fa-3x"></i>
+                <h4>Pagamento Aceito</h4>
+            </div>
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-people-carry fa-3x"></i>
+                <h4>Preparando Para Envio</h4>
+            </div>
+            <div class="col-3 text-center">
+                <i class="fas fa-box fa-3x"></i>
+                <h4>Pedido Pronto</h4>
+            </div>
+            <div class="col-3 text-center">
+                <i class="fas fa-truck-moving fa-3x"></i>
+                <h4>Pedido Postado</h4>
+            </div>
+        </div>
+    }
+    @if (Model == SD.StatusReady)
+    {
+        <div class="row">
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-money-check fa-3x"></i>
+                <h4>Pagamento Aceito</h4>
+            </div>
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-people-carry fa-3x" ></i>
+                <h4>Preparando Para Envio</h4>
+            </div>
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-box fa-3x"></i>
+                <h4>Pedido Pronto</h4>
+            </div>
+            <div class="col-3 text-center">
+                <i class="fas fa-truck-moving fa-3x"></i>
+                <h4>Pedido Postado</h4>
+            </div>
+        </div>
+    }
+    @if (Model == SD.StatusPosted)
+    {
+        <div class="row">
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-money-check fa-3x"></i>
+                <h4>Pagamento Aceito</h4>
+            </div>
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-people-carry fa-3x"></i>
+                <h4>Preparando Para Envio</h4>
+            </div>
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-box fa-3x"></i>
+                <h4>Pedido Pronto</h4>
+            </div>
+            <div class="col-3 text-center" style="color:#1ebba3">
+                <i class="fas fa-truck-moving fa-3x"></i>
+                <h4>Pedido Postado</h4>
+            </div>
+        </div>
+    }
+</div>

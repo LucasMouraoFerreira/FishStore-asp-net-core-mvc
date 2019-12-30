@@ -19,15 +19,15 @@ namespace FishStore.Utility
 		public const string ssUserCity = "ssUserCity";
 		public const string ssUserState = "ssUserState";
 
-		public const string StatusSubmitted = "Submitted";
-		public const string StatusInProcess = "Being Prepare";
-		public const string StatusReady = "Ready to Post";
-		public const string StatusPosted = "Posted";
-		public const string StatusCanceled = "Canceled";
+		public const string StatusSubmitted = "Aprovado";
+		public const string StatusInProcess = "Sendo Preparado";
+		public const string StatusReady = "Pronto";
+		public const string StatusPosted = "Pedido Postado";
+		public const string StatusCanceled = "Cancelado";
 
-		public const string PaymentStatusPending = "Pending";
-		public const string PaymentStatusApproved = "Approved";
-		public const string PaymentStatusRejected = "Rejected";
+		public const string PaymentStatusPending = "Pendente";
+		public const string PaymentStatusApproved = "Aprovado";
+		public const string PaymentStatusRejected = "Rejeitado";
 
 
 		public static string ConvertToRawHtml(string source)

@@ -1,0 +1,68 @@
+﻿@model List<FishStore.Models.ViewModels.OrderDetailsViewModel>
+@using FishStore.Utility
+@{
+    ViewData["Title"] = "ManageOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center" style="padding-top:90px">Gerenciar Pedidos</h1>
+<br />
+<form method="post">
+    @if (Model.Count > 0)
+    {
+        <div class="jumbotron">
+            <div class="row bg-white p-2 border mb-3 rounded">
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 pb-3 pt-3">
+                        <div class="p-3">
+                            <div class="row">
+                                <div class="col-4">
+                                    ID Pedido : @item.OrderHeader.Id
+                                    <ul class="text-info">
+                                        @foreach (var details in item.OrderDetails)
+                                        {
+                                            <li>@details.Name x @details.Count</li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="col-4 pb-2">
+                                    <div class="input-group pb-2">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Data do Pedido</span>
+                                        </div>
+                                        <input type="text" class="border rounded form-control" readonly value="@item.OrderHeader.OrderDate" />
+                                    </div>
+                                </div>
+                                <div class="col-3 offset-1 d-flex align-items-center">
+                                    @if (item.OrderHeader.Status.Equals(SD.StatusSubmitted))
+                                    {
+                                        <div class="col-12">
+                                            <button type="submit" asp-action="OrderPrepare" asp-route-OrderId="@item.OrderHeader.Id" class="btn btn-info form-control mb-3">
+                                                <i class="fas fa-check"></i> &nbsp; Iniciar Preparo
+                                            </button>
+                                            <button type="submit" asp-action="OrderCancel" asp-route-OrderId="@item.OrderHeader.Id" class="btn btn-danger form-control mb-3">
+                                                <i class="fas fa-times"></i> &nbsp; Cancelar Pedido
+                                            </button>
+                                        </div>
+                                    }
+                                    else if(item.OrderHeader.Status.Equals(SD.StatusInProcess))
+                                    {
+                                        <div class="col-12">
+                                            <button type="submit" asp-action="OrderReady" asp-route-OrderId="@item.OrderHeader.Id" class="btn btn-success form-control mb-3">
+                                                <i class="fas fa-flag-checkered"></i> &nbsp; Pedido Pronto
+                                            </button>
+                                            <button type="submit" asp-action="OrderCancel" asp-route-OrderId="@item.OrderHeader.Id" class="btn btn-danger form-control mb-3">
+                                                <i class="fas fa-times"></i> &nbsp; Cancelar Pedido
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</form>

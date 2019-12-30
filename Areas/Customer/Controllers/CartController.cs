@@ -7,6 +7,7 @@ using FishStore.Data;
 using FishStore.Models;
 using FishStore.Models.ViewModels;
 using FishStore.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,7 @@ namespace FishStore.Areas.Customer.Controllers
         //INDEX - GET
         public async Task<IActionResult> Index()
         {
-               
+
 
             detailCart = new OrderDetailsCart()
             {
@@ -49,7 +50,7 @@ namespace FishStore.Areas.Customer.Controllers
             }
 
             var cart = _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value);
-            if(cart != null)
+            if (cart != null)
             {
                 detailCart.listCart = cart.ToList();
             }
@@ -126,7 +127,7 @@ namespace FishStore.Areas.Customer.Controllers
         //SUMMARY - GET
         public async Task<IActionResult> Summary()
         {
-            
+
             detailCart = new OrderDetailsCart()
             {
                 OrderHeader = new Models.OrderHeader()
@@ -136,7 +137,7 @@ namespace FishStore.Areas.Customer.Controllers
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            ApplicationUser applicationUser = await _db.ApplicationUser.Where(c => c.Id == claim.Value).FirstOrDefaultAsync(); 
+            ApplicationUser applicationUser = await _db.ApplicationUser.Where(c => c.Id == claim.Value).FirstOrDefaultAsync();
             if (claim != null)
             {
                 var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
@@ -160,7 +161,7 @@ namespace FishStore.Areas.Customer.Controllers
                 volume += (list.StoreItem.Volume * list.Count);
             }
             detailCart.OrderHeader.OrderTotalOriginal = detailCart.OrderHeader.OrderTotal;
-            
+
             if (HttpContext.Session.GetString(SD.ssUserName) != null)
             {
                 detailCart.OrderHeader.Name = HttpContext.Session.GetString(SD.ssUserName);
@@ -193,7 +194,7 @@ namespace FishStore.Areas.Customer.Controllers
             {
                 detailCart.OrderHeader.State = applicationUser.State;
             }
-                       
+
             if (HttpContext.Session.GetString(SD.ssPostalCode) != null)
             {
                 detailCart.OrderHeader.PostalCode = HttpContext.Session.GetString(SD.ssPostalCode);
@@ -201,7 +202,7 @@ namespace FishStore.Areas.Customer.Controllers
                 detailCart.OrderHeader.PostalPrice = Convert.ToDouble(precoPrazo[0]);
                 detailCart.OrderHeader.PostalTime = Convert.ToDouble(precoPrazo[1]);
                 detailCart.OrderHeader.OrderTotal += detailCart.OrderHeader.PostalPrice;
-                HttpContext.Session.SetInt32("ssPostalPrice", Convert.ToInt32(detailCart.OrderHeader.PostalPrice*100));
+                HttpContext.Session.SetInt32("ssPostalPrice", Convert.ToInt32(detailCart.OrderHeader.PostalPrice * 100));
             }
             else
             {
@@ -226,11 +227,14 @@ namespace FishStore.Areas.Customer.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             detailCart.listCart = await _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value).ToListAsync();
-            
+
             detailCart.OrderHeader.UserId = claim.Value;
             detailCart.OrderHeader.Status = SD.PaymentStatusPending;
             detailCart.OrderHeader.OrderDate = DateTime.Now;
             detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+
+            var postalPrice = HttpContext.Session.GetInt32("ssPostalPrice");
+            detailCart.OrderHeader.PostalPrice = Convert.ToDouble(postalPrice) / 100;
 
             List<OrderDetails> orderDetailsList = new List<OrderDetails>();
 
@@ -245,7 +249,7 @@ namespace FishStore.Areas.Customer.Controllers
                 HttpContext.Session.SetInt32("ssCartCount", cnt);
             }
 
-           
+
 
             foreach (var item in detailCart.listCart)
             {
@@ -263,8 +267,7 @@ namespace FishStore.Areas.Customer.Controllers
                 _db.OrderDetails.Add(orderDetails);
             }
 
-            var postalPrice = HttpContext.Session.GetInt32("ssPostalPrice");
-            detailCart.OrderHeader.PostalPrice = Convert.ToDouble(postalPrice) / 100;
+
 
             detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotalOriginal + detailCart.OrderHeader.PostalPrice;
 
@@ -292,7 +295,7 @@ namespace FishStore.Areas.Customer.Controllers
                 detailCart.OrderHeader.TransactionId = charge.BalanceTransactionId;
             }
 
-            if(charge.Status.ToLower() == "succeeded")
+            if (charge.Status.ToLower() == "succeeded")
             {
                 detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
                 detailCart.OrderHeader.Status = SD.StatusSubmitted;
@@ -303,8 +306,8 @@ namespace FishStore.Areas.Customer.Controllers
             }
 
             await _db.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
-            //return RedirectToAction("Confirm","Order",new { id = detailCart.OrderHeader.Id });
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Confirm", "Order", new { id = detailCart.OrderHeader.Id });
         }
 
 
@@ -333,7 +336,7 @@ namespace FishStore.Areas.Customer.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
+
         public async Task<IActionResult> Plus(int cartId)
         {
             var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
@@ -345,7 +348,7 @@ namespace FishStore.Areas.Customer.Controllers
         public async Task<IActionResult> Minus(int cartId)
         {
             var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
-            if(cart.Count == 1)
+            if (cart.Count == 1)
             {
                 _db.ShoppingCart.Remove(cart);
                 await _db.SaveChangesAsync();
@@ -371,6 +374,8 @@ namespace FishStore.Areas.Customer.Controllers
             HttpContext.Session.SetInt32("ssCartCount", cnt);
             return RedirectToAction(nameof(Index));
         }
+
+        
 
     }
 }
