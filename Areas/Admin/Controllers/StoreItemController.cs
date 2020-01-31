@@ -145,6 +145,7 @@ namespace FishStore.Areas.Admin.Controllers
 
                 //Delete the original file
                 var ImagePath = Path.Combine(webRootPath, StoreItemFromDb.Image.TrimStart('\\'));
+
                 if (System.IO.File.Exists(ImagePath))
                 {
                     System.IO.File.Delete(ImagePath);

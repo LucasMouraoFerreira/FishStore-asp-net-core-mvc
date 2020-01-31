@@ -39,8 +39,8 @@ namespace FishStore.Models
         [Display(Name = "Volume(cm³)")]
         public double Volume { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]
-        [Display(Name = "Massa(kg)")]
+        [Range(0, double.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]
+        [Display(Name = "Massa(g)")]
         public double Weight { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Valor deve ser maior que 0")]

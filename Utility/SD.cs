@@ -63,18 +63,19 @@ namespace FishStore.Utility
 			double squareSideLength = Math.Pow(volume, 1.0 / 3.0);
 			double sideUsed = 0.0;
 			double weightUsed = 0.0;
+			double weightu = weight / 1000;
 
-			if(weight < 1.0)
+			if(weightu < 1.0)
 			{
 				weightUsed = 1.0;
 			}
-			else if(weight > 29)
+			else if(weightu > 29)
 			{
 				weightUsed = 29.0;
 			}
 			else
 			{
-				weightUsed = weight;
+				weightUsed = weightu;
 			}
 
 			if(squareSideLength > 66.0)

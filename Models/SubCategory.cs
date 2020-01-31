@@ -13,7 +13,6 @@ namespace FishStore.Models
         public int Id { get; set; }
 
         [Display(Name = "Nome da Subcategoria")]
-        [Required]
         public string Name { get; set; }
 
         [Display(Name = "Categoria")]

@@ -11,12 +11,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>FakeFishStore</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" /> 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/MeuCss.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ca63af555e.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="~/images/favicon.ico" />
+
 </head>
 <body>
     <header>
@@ -65,13 +67,13 @@
                                 <div class="dropdown-menu" style="background: rgba(0, 0, 0, 0.8) !important;" aria-labelledby="navbarDropDownMenuLink">
                                     <a class="dropdown-item navbar-textu text-uppercase" asp-action="ManageOrder" asp-controller="Order" asp-area="Customer">Gerenciar Pedidos</a>
                                     <a class="dropdown-item navbar-textu text-uppercase" asp-action="OrderPickup" asp-controller="Order" asp-area="Customer">Postar Pedidos</a>
-                                    
+
                                 </div>
 
                             </li>
                         }
 
-                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
+                        @if ((HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null) && (User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.ManagerUser)))
                         {
                             <li class="nav-item">
                                 <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link navbar-textu">
@@ -96,7 +98,14 @@
 
     <footer class="border-top footer bg-dark text-light ">
         <div class="container">
-            &copy; 2020 - FakeFishStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Política de Privacidade</a>
+            <div class="row">
+                <div class="col-md-6">
+                    &copy; 2020 - FakeFishStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Política de Privacidade</a>
+                </div>
+                <div class="col-md-6">
+                    Criado Por: Lucas Mourão Ferreira - lucas.mo.ferr@gmail.com
+                </div>
+            </div>
         </div>
     </footer>
 
